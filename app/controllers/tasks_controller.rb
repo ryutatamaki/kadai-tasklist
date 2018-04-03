@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy]
+  before_action :correct_user, only: [:index, :show, :edit, :destroy]
   
   def index
     @tasks = Task.all
@@ -22,6 +22,7 @@ class TasksController < ApplicationController
       flash[:success] = "タスクを追加しました"
       redirect_to root_url
     else
+      @tasks = current_user.tasks
       flash.now[:danger] = "タスクを追加できませんでした"
       render 'toppages/index'
     end
